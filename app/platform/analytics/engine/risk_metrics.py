@@ -1,5 +1,3 @@
-# app\platform\analytics\engine\risk_metrics.py
-
 import numpy as np
 import pandas as pd
 from app.platform.analytics.metadata.manifests import tail_risk_manifest
@@ -10,23 +8,41 @@ class TailRiskEngine:
     def metadata(self):
         return self.manifest
 
-    def calculate(self, returns: pd.Series):
-        if isinstance(returns, pd.DataFrame):
-            returns = returns.iloc[:, 0]
+    def calculate(self, data: pd.Series):
+        # Garante que temos uma Series
+        if isinstance(data, pd.DataFrame):
+            data = data.iloc[:, 0]
+        
+        # Limpeza inicial
+        data = data.dropna()
 
-        returns = returns.dropna()
+        # LOGICA DE CONVERSÃO: Se os dados parecerem preços (ex: PETR4 a R$ 26,00),
+        # transformamos em retornos percentuais.
+        # Se a média for muito diferente de zero ou não houver valores negativos, 
+        # provavelmente são preços nominais.
+        if data.min() > 0 and data.mean() > 1:
+            returns = data.pct_change().dropna()
+        else:
+            returns = data
+
+        # Remove valores infinitos (caso ocorra divisão por zero no pct_change)
+        returns = returns.replace([np.inf, -np.inf], np.nan).dropna()
 
         confidences = [95, 98, 99, 99.9]
         results = {}
 
         for conf in confidences:
+            # Em retornos, o VaR é o percentil da cauda esquerda (prejuízos)
             percentile_val = 100 - conf
             var_val = np.percentile(returns, percentile_val)
 
+            # CVaR: Média dos retornos que são menores ou iguais ao VaR
             tail_returns = returns[returns <= var_val]
             cvar_val = tail_returns.mean() if not tail_returns.empty else var_val
 
             key = str(conf).replace(".", "_")
+            # Multiplicamos por 100 para exibir em formato percentual legível (opcional)
+            # Aqui mantive o decimal (ex: -0.02) que é o padrão de cálculo
             results[f"var_{key}"] = float(var_val)
             results[f"cvar_{key}"] = float(cvar_val)
 
@@ -34,6 +50,8 @@ class TailRiskEngine:
         results["daily_std"] = float(returns.std())
 
         mean_return = float(returns.mean())
+        
+        # O Z-Score agora faz sentido: (Pior Retorno - Média dos Retornos) / Desvio Padrão
         z_score = (
             (results["worst_day"] - mean_return) / results["daily_std"]
             if results["daily_std"] != 0
