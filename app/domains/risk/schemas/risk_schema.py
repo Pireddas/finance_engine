@@ -6,6 +6,7 @@ from typing import Optional
 # --- INPUT (Request) ---
 class RiskMetricsRequest(BaseModel):
     ticker: str = Field(..., json_schema_extra={"example": "PETR4.SA"}, description="Ticker do ativo")
+    short: Optional[bool] = Field(False, description="Operação short?")
     start_date: Optional[str] = Field(None, json_schema_extra={"example": "2024-01-01"}, description="Data de início (AAAA-MM-DD)")
     end_date: Optional[str] = Field(None, json_schema_extra={"example": "2024-12-31"}, description="Data de fim (AAAA-MM-DD)")
     ai_analysis: Optional[bool] = Field(False, description="Incluir análise de IA nos resultados")

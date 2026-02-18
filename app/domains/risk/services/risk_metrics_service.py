@@ -33,6 +33,7 @@ class RiskMetricsService:
     def get_risk_metrics(
         self, 
         ticker: str, 
+        short: bool,
         start_date: str = None, 
         end_date: str = None,
         ai_analysis: bool = False,
@@ -53,7 +54,10 @@ class RiskMetricsService:
         # --- CÁLCULOS ESTATÍSTICOS (RISCO DE CAUDA) ---
 
         self.engine = TailRiskEngine()
-        results = self.engine.calculate(returns)
+        if short != True:
+            results = self.engine.calculate(returns)
+        else:
+            results = self.engine.short_calculate(returns)
 
         use_case = AnalyzeTextUseCase()
         payload_string = json.dumps(results, ensure_ascii=False)

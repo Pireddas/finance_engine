@@ -1,6 +1,6 @@
 # app\platform\observability\auth_middleware.py
  
-import sqlite3, hashlib, os
+import sqlite3, hashlib, os, psycopg2
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
@@ -27,43 +27,56 @@ class SQLiteAuthMiddleware(BaseHTTPMiddleware):
 
         key_hash = hashlib.sha256(api_key.encode()).hexdigest()
 
-        db_path = settings.DB_PATH
-        
-        if not os.path.exists(db_path):
-            msg, name = Error.error(id, "SERVICE_UNAV")
-            FastLog.write_error(name=name, message=msg)
-            return JSONResponse(
-                status_code=msg["Status"], 
-                content={"detail": msg["Error"]}
-            )
-
         try:
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-            # Buscamos apenas chaves ativas
-            cursor.execute(
-                "SELECT owner FROM api_keys WHERE key_hash = ? AND active = 1", 
-                (key_hash,)
-            )
-            result = cursor.fetchone()
-            conn.close()
+            # Lógica PostgreSQL
+            if settings.DB_TYPE == "postgresql":
+                conn = psycopg2.connect(settings.POSTGRES_URL, client_encoding='utf8')
+                cursor = conn.cursor()
+                cursor.execute(
+                    "SELECT owner FROM api_keys WHERE key_hash = %s AND active = 1", 
+                    (key_hash,)
+                )
+                result = cursor.fetchone()
+                conn.close()
 
-            if not result: #########################
+            # Lógica SQLite (Mantida como original)
+            else:
+                db_path = settings.DB_PATH
+                if not os.path.exists(db_path):
+                    msg, name = Error.error(id, "SERVICE_UNAV")
+                    FastLog.write_error(name=name, message=msg)
+                    return JSONResponse(
+                        status_code=msg["Status"], 
+                        content={"detail": msg["Error"]}
+                    )
+                
+                conn = sqlite3.connect(db_path)
+                cursor = conn.cursor()
+                cursor.execute(
+                    "SELECT owner FROM api_keys WHERE key_hash = ? AND active = 1", 
+                    (key_hash,)
+                )
+                result = cursor.fetchone()
+                conn.close()
+
+            if not result:
                 msg, name = Error.error(id, "INV_API_KEY")
                 FastLog.write_error(name=name, message=msg)
                 return JSONResponse(
                     status_code=msg["Status"], 
-                    content={"detail": f"{msg["Error"]}"}
+                    content={"detail": f"{msg['Error']}"}
                 )
 
             request.state.user = result[0]
             
-        except Exception as e: ######################
+        except Exception as e:
+            # Encoding para evitar erro de caracteres no Windows
+            err_msg = str(e).encode('utf-8', errors='replace').decode('utf-8')
             msg, name = Error.error(id, "GENERIC_ERR_500")
             FastLog.write_error(name=name, message=msg)
             return JSONResponse(
                 status_code=msg["Status"], 
-                content={"detail": f"{msg["Error"]} {str(e)}"}
+                content={"detail": f"{msg['Error']} {err_msg}"}
             )
 
         return await call_next(request)
