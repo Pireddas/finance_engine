@@ -1,9 +1,4 @@
 # app\domains\finance\api\metrics_route.py
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
 from fastapi import APIRouter, Request, Depends
 from app.application.config import settings
 from app.domains.finance.schemas.metrics_schema import BasicMetricsRequest, BasicMetricsResponse

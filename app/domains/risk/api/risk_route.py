@@ -35,50 +35,6 @@ async def get_risk_metrics(
     manifest = engine.metadata()
     Log(service_name="risk-metrics", params=manifest, request_id=request.state.request_id).debug()
 
-    # market_data_repo = YFinanceRiskRepository()
- 
-    # service = RiskMetricsService(
-    #     market_data_repo=market_data_repo,
-    # )
-
-    # try:
-    #     result = service.get_risk_metrics(
-    #         ticker=params.ticker,
-    #         start_date=params.start_date,
-    #         end_date=params.end_date,
-    #     )
-    # except ValueError as exc:
-    #     FastLog.write_error("api-governance-risk-error-400", f"ID: {getattr(request.state, 'request_id', 'unknown')} | message: {str(exc)}")
-    #     raise HTTPException(
-    #         status_code=400,
-    #         detail=str(exc),
-    #     )
-     
-    # log_message = (
-    #     f"ID: {getattr(request.state, 'request_id', 'unknown')} | "
-    #     f"Service: risk-metrics | "
-    #     f"ticker: {params.ticker} | "
-    #     f"start_date: {params.start_date} | "
-    #     f"end_date: {params.end_date}"
-    # )
-    # FastLog.write_info(name="api-governance-risk-info", message=log_message)
-
-    # metadata = TailRiskEngine()
-    # version = metadata.metadata()
-    # version_str = ", ".join(
-    #     f"{k}: {v}" for k, v in version.items()
-    # )
-    # log_metadata = f"ID: {request.state.request_id} | Version: {version_str}"
-    # FastLog.write_debug(name="api-governance-risk-debug", message=log_metadata)
-
-    # if isinstance(result, dict) and "error" in result:
-    #     FastLog.write_error("api-governance-risk-error-404", f"ID: {getattr(request.state, 'request_id', 'unknown')} | message: {result["error"]}")
-    #     raise HTTPException(status_code=404, detail=result["error"])
-
-
-    # manifest = TailRiskEngine().metadata()
-    # assembler = RiskMetricsResponseAssembler()
-
     return assembler.build(
         request_id=getattr(request.state, "request_id", "unknown"),
         params=params,

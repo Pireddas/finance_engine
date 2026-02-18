@@ -1130,7 +1130,6 @@ files = [
 ]
 
 [[package]]
-<<<<<<< HEAD
 name = "psycopg2"
 version = "2.9.11"
 description = "psycopg2 - Python-PostgreSQL Database Adapter"
@@ -1148,8 +1147,6 @@ files = [
 ]
 
 [[package]]
-=======
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
 name = "pyarrow"
 version = "23.0.0"
 description = "Python library for Apache Arrow"
@@ -1815,8 +1812,4 @@ repair = ["scipy (>=1.6.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-<<<<<<< HEAD
 content-hash = "85092347ce2b002ce9a77d1e5f698efa4faffff20b2d52bdad4bd15a80a561bc"
-=======
-content-hash = "9176469f2b0cb2d9c45a511cf77850c20a9031eb0f57a7aff70f9f5bc064bb64"
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383

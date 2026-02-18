@@ -10,13 +10,9 @@ venv/
 
 
 # --- Banco de Dados (Segurança de Governança) ---
-<<<<<<< HEAD
 src/data/
 src/data/*.db
 src/data/*.db-journal
-=======
-app/infrastructure/db/sqlite/*.db
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
 
 # --- Logs e Auditoria ---
 logs/

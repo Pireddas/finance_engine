@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 import sqlite3, os, psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-=======
-# app/application/bootstrap.py
-
-import sqlite3
-import os
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
 from app.application.config import settings
 
 def init_api_key_db():
@@ -27,7 +20,6 @@ def init_api_key_db():
         """)
         conn.commit()
         conn.close()
-<<<<<<< HEAD
         
     elif settings.DB_TYPE == "postgresql":
         # 1. Extrair informações da URL para conectar ao banco padrão 'postgres'
@@ -74,7 +66,3 @@ def init_api_key_db():
             error_msg = str(e).encode('utf-8', errors='replace').decode('utf-8')
             print(f"Erro crítico no bootstrap do Postgres: {error_msg}")
             raise e
-=======
-    elif settings.DB_TYPE == "postgresql":
-        pass
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383

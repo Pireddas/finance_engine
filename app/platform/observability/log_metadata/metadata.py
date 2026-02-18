@@ -1,9 +1,5 @@
 # app\platform\observability\log_metadata\metadata.py
-<<<<<<< HEAD
  
-=======
-
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
 from fastapi import params
 
 class LogAssembler:
@@ -24,7 +20,6 @@ class LogAssembler:
     @staticmethod
     def info(service_name: str, request_id: str, params: params) -> str:
         try:
-<<<<<<< HEAD
             if service_name=="basic-metrics":
                 result = (
                     f"ID: {request_id} | "
@@ -42,16 +37,6 @@ class LogAssembler:
                     f"start_date: {params.start_date} | "
                     f"end_date: {params.end_date} | "
                 )
-=======
-            result = (
-                f"ID: {request_id} | "
-                f"Service: {service_name} | "
-                f"ticker: {params.ticker} | "
-                f"benchmark: {params.benchmark} | "
-                f"start_date: {params.start_date} | "
-                f"end_date: {params.end_date} | "
-            )
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
         except AttributeError as e:
             raise ValueError(f"Erro: {service_name} - {e}")
         

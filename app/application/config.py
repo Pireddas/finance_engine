@@ -44,20 +44,13 @@ class Settings:
     DATA_PERIOD = os.getenv("DATA_PERIOD", "2y")
     ANNUALIZATION_FACTOR = int(os.getenv("ANNUALIZATION_FACTOR", 252))
 
-<<<<<<< HEAD
     DB_TYPE = os.getenv("DB_TYPE", "sqlite")
-=======
-    DB_TYPE = os.getenv("DB_TYPO", "sqlite")
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
     DB_DIR = os.getenv("DB_DIR", "app/infrastructure/db/sqlite")
     DB_PATH = os.getenv(
         "DB_PATH",
         f"{DB_DIR}/governance.db",
     )
-<<<<<<< HEAD
     POSTGRES_URL = os.getenv("POSTGRES_URL")
-=======
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
  
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 

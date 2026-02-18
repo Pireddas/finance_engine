@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 # app\platform\observability\err_logger\error_catalog.py
 
-=======
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
 class ErrorAssembler:
     def __init__(self, code, description):
         self.code = code

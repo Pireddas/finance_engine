@@ -81,7 +81,7 @@ O projeto foi desenhado para ser extensível, com um roadmap claro para ambiente
     Configure o arquivo `.env` com as definições de `RISK_FREE_RATE`, `DEFAULT_BENCHMARK` e `DB_PATH`.
 3.  **Execução:**
     ```bash
-    $env:OPENAI_API_KEY="your_api_key_here"
+    env: OPENAI_API_KEY="your_api_key_here"
     poetry run python main.py
     
     # http://127.0.0.1:8000/

@@ -6,10 +6,7 @@ from functools import lru_cache
 import pandas as pd
  
 from app.domains.finance.repositories.market_data import BasicRepository
-<<<<<<< HEAD
 from app.domains.risk.repositories.market_data import RiskRepository
-=======
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
 from app.infrastructure.market_data.validators import validate_ticker
 from app.application.errors.semantic_error import ApplicationError
  
@@ -93,7 +90,6 @@ class YFinanceBasicRepository(BasicRepository):
 #             **params,
 #         )
     
-<<<<<<< HEAD
 class YFinanceRiskRepository(RiskRepository):
 
     @lru_cache(maxsize=256)
@@ -119,32 +115,3 @@ class YFinanceRiskRepository(RiskRepository):
             auto_adjust=True,
             **params,
         )
-=======
-# class YFinanceRiskRepository(RiskRepository):
-
-#     @lru_cache(maxsize=256)
-#     def fetch_data(
-#         self,
-#         ticker: str,
-#         start_date: date | None,
-#         end_date: date | None,
-#     ) -> pd.DataFrame:
-
-#         if not validate_ticker(ticker):
-#             msg, name = Error400.error(id, "INV_TICKER")
-#             FastLog.write_error(name=name, message=msg)
-#             raise ValueError(f"{msg} {ticker}")
-
-#         params = {
-#                 "start": start_date,
-#                 "end": (end_date or date.today()),
-#             }
-
-
-#         return yf.download(
-#             tickers=ticker,
-#             progress=False,
-#             auto_adjust=True,
-#             **params,
-#         )
->>>>>>> c0d53267f71c88994253d019eb96ea0b0b1e7383
