@@ -34,7 +34,7 @@ Serve como **roadmap oficial do produto**, garantindo evolução incremental, go
 ---
 
 ## EP-3. Visão Geral das Fases
-
+ 
 > **Nota Institucional:**  
 > A governança é iniciada no EP-4 e evolui progressivamente até o EP-8, onde atinge seu nível máximo de maturidade institucional.
 

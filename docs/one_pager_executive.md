@@ -3,7 +3,7 @@ Origem:
 - business/business_problem.md
 - business/business_requirements.md (BR-1 a BR-8)
 - business/evolutionary_phases.md (EP-1 a EP-9)
-
+ 
 Elaboração: Gerência Executiva / Especialista de Requisitos / Product Owner  
 Validação: Alta Gestão / Comitê Decisor  
 Status: Aprovado  

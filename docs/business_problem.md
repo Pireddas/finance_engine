@@ -18,7 +18,7 @@ O processo atual depende excessivamente de iniciativas individuais e de planilha
 - Falta de **governança sobre métricas e premissas**
 - Ausência de automação e rastreabilidade
 - Dependência de conhecimento tácito de pessoas-chave
-
+ 
 ## Objetivo da Melhoria
 Estabelecer um processo **padronizado, reprodutível e auditável** para comparação de ativos financeiros, alinhado às diretrizes de risco, retorno e apetite definidos pela alta gestão.
 

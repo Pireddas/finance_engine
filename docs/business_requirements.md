@@ -154,7 +154,7 @@ O projeto será considerado bem-sucedido quando:
 - **BR-7.3** O framework sustentar decisões formais sem dependência de indivíduos.
 
 ---
-
+ 
 ## BR-8. Conclusão
 
 O faseamento garante entrega rápida de valor sem comprometer governança futura.

@@ -3,7 +3,7 @@
 Framework Padronizado de Comparação de Ativos Financeiros
 
 ---
-
+ 
 **Documento:** commercial_proposal_EP4_MVP.md  
 **Natureza:** Comercial / Contratual  
 **Audiência:** Diretoria, Compras, Jurídico  
