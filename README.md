@@ -5,7 +5,7 @@
 
 ## Disclaimer
 
-Esse projeto é um estudo de caso fictício, baseados em situações reais vivenciadas no ambiente corporativo. Tem como objetivo apresentar um modelo concreto e estruturado, sem expectativa de alcançar a perfeição de forma isolada.
+Esse projeto é um estudo de caso fictício, baseados em situações reais vivenciadas no ambiente corporativo. Tem como objetivo apresentar um modelo concreto e estruturado, sem expectativas de alcançar a perfeição de forma isolada.
 
 Uma entrega com excelência é construída através do trabalho em equipe, ouvindo o contraditório e encontrando pontos de equilíbrio. 
 
