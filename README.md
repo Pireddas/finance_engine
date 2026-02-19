@@ -78,7 +78,7 @@ O projeto foi desenhado para ser extensível, com um roadmap claro para ambiente
     poetry install
     ```
 2.  **Configuração:**
-    Configure o arquivo `.env` com as definições de `RISK_FREE_RATE`, `DEFAULT_BENCHMARK` e `DB_PATH`.
+    Configure o arquivo `.env` com as definições de `RISK_FREE_RATE`, `DEFAULT_BENCHMARK`, `DB_PATH` e etc.
 3.  **Execução:**
     ```bash
     env: OPENAI_API_KEY="your_api_key_here"
