@@ -3,12 +3,18 @@
 
 [![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-green)](#) 
 
+## Disclaimer
+
+Esse projeto é um estudo de caso fictício, baseados em situações reais vivenciadas no ambiente corporativo. Tem como objetivo apresentar um modelo concreto e estruturado, sem expectativa de alcançar a perfeição de forma isolada.
+
+Uma entrega com excelência é construída através do trabalho em equipe, ouvindo o contraditório e encontrando pontos de equilíbrio. 
+
 ## 📌 Visão Geral
 
 A **Financial Metrics API** é uma solução de análise quantitativa avançada voltada para a gestão de ativos e risco financeiro. Diferente de scripts financeiros simples, este projeto foi construído sob princípios de **Domain-Driven Design (DDD)** e **Arquitetura Limpa**, focando em três pilares:
 
 1.  **Precisão Quantitativa:** Métricas de performance, risco de cauda (Tail Risk) e análise de portfólio.
-2.  **Governança:** Controle de acesso rígido via API Keys com persistência segura em banco de dados.
+2.  **Governança:** Controle de acesso via API Keys com persistência segura, rastreabilidade e auditoria de uso.
 3.  **Observabilidade:** Rastreabilidade total de requisições, logs estruturados e monitoramento de performance.
 
 ---
@@ -18,7 +24,7 @@ A **Financial Metrics API** é uma solução de análise quantitativa avançada 
 O projeto utiliza uma divisão por **Domínios**, isolando a lógica de negócio das implementações técnicas e provedores externos.
 
 ### Estrutura de Camadas
-* **Domains (`app/domains`):** O coração da aplicação. Cada domínio (Finance, Risk, Portfolio, Auth) possui seus próprios serviços, esquemas (Pydantic) e definições de interface.
+* **Domains (`app/domains`):** Cada domínio (Finance, Risk, Portfolio, Auth) possui seus próprios serviços, esquemas (Pydantic) e definições de interface.
 * **Infrastructure (`app/infrastructure`):** Implementações concretas de acesso a dados (integração com Yahoo Finance via `yfinance`) e persistência (SQLite para gestão de chaves).
 * **Application (`app/application`):** Configurações globais via Pydantic Settings, bootstrapping do banco de dados e o container de dependências.
 * **Platform (`app/platform`):** Recursos transversais (cross-cutting concerns) como middlewares de segurança, auditoria e utilitários de gestão.
@@ -81,10 +87,9 @@ O projeto foi desenhado para ser extensível, com um roadmap claro para ambiente
     poetry install
     ```
 2.  **Configuração:**
-    Configure o arquivo `.env` com as definições de `RISK_FREE_RATE`, `DEFAULT_BENCHMARK`, `DB_PATH` e etc.
+    Configure o arquivo `.env` com as definições de `RISK_FREE_RATE`, `DEFAULT_BENCHMARK`, `DB_PATH`, etc.
 3.  **Execução:**
     ```bash
-    env: OPENAI_API_KEY="your_api_key_here"
     poetry run python main.py
     
     # http://127.0.0.1:8000/
