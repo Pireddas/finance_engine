@@ -1,5 +1,8 @@
 # Financial Metrics API (v0.1.0)
 
+
+[![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-green)](#) 
+
 ## 📌 Visão Geral
 
 A **Financial Metrics API** é uma solução de análise quantitativa avançada voltada para a gestão de ativos e risco financeiro. Diferente de scripts financeiros simples, este projeto foi construído sob princípios de **Domain-Driven Design (DDD)** e **Arquitetura Limpa**, focando em três pilares:
