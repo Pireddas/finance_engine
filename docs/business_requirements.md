@@ -158,7 +158,3 @@ O projeto será considerado bem-sucedido quando:
 ## BR-8. Conclusão
 
 O faseamento garante entrega rápida de valor sem comprometer governança futura.
-
-Primeiro resolve o básico.  
-Depois fica sofisticado.  
-Na ordem certa.
