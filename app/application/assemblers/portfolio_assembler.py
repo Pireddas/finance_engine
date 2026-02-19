@@ -42,5 +42,6 @@ class PortfolioMetricsResponseAssembler:
                 "start_date": params.start_date,
                 "end_date": params.end_date
             },
-            "results": result["results"]
+            "results": result["results"],
+            "ai_analysis": ai_analysis
         }
