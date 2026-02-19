@@ -9,6 +9,7 @@ from app.platform.analytics.engine.return_engine import ReturnEngine
 from app.application.gpt.analyze_text import AnalyzeTextUseCase
 from app.domains.portfolio.contract.prompt_contract import FinanceiroPromptContract
 
+
 class PortfolioService:
   
     def __init__(
@@ -72,13 +73,19 @@ class PortfolioService:
             returns, settings.RISK_FREE_RATE
         )
 
-        return {
+        payload ={
             "results": {
-                "portfolio": portfolio,
-                "correlation_matrix": correlation_data,
-                "individual_metrics": individual
-                }
+            "portfolio": portfolio,
+            "correlation_matrix": correlation_data,
+            "individual_metrics": individual
             }
+        }
+        use_case = AnalyzeTextUseCase()
+        payload_string = json.dumps(payload, ensure_ascii=False)
+        ai_analysis = None if not ai_analysis else use_case.execute(FinanceiroPromptContract(), payload_string)
+        # --- format to genai prompt ---
+
+        return payload, ai_analysis
 
 
 

@@ -44,8 +44,8 @@ async def get_portfolio_metrics(
     if (params.ai_analysis) and (not settings.OPENAI_API_KEY):
         raise ApplicationError("NO_API_KEYS") 
     
-    res = service.get_portfolio_metrics(**params.model_dump())
-    ai_analysis=""
+    res, ai_analysis = service.get_portfolio_metrics(**params.model_dump())
+
 
     return_manifest = return_engine.metadata()
     Log(service_name="portfolio-metrics", params=return_manifest, request_id=request.state.request_id).debug()

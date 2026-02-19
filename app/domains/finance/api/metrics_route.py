@@ -33,7 +33,7 @@ async def get_basic_metrics(
 
     manifest = engine.metadata()
     Log(service_name="basic-metrics", params=manifest, request_id=request.state.request_id).debug()
-
+ 
     return assembler.build(
         request_id=getattr(request.state, "request_id", "unknown"),
         engine_manifest=manifest,
