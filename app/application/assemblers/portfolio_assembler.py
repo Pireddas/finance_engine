@@ -10,7 +10,8 @@ class PortfolioMetricsResponseAssembler:
         engine_Correlation: dict,
         engine_IndividualMetrics: dict,
         engine_Return: dict,
-        result: dict
+        result: dict,
+        ai_analysis: str
     ) -> dict:
         return {
             "request_id": request_id,

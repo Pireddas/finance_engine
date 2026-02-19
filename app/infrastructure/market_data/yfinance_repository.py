@@ -7,6 +7,7 @@ import pandas as pd
  
 from app.domains.finance.repositories.market_data import BasicRepository
 from app.domains.risk.repositories.market_data import RiskRepository
+from app.domains.portfolio.repositories.market_data import PortfolioRepository
 from app.infrastructure.market_data.validators import validate_ticker
 from app.application.errors.semantic_error import ApplicationError
  
@@ -61,34 +62,33 @@ class YFinanceBasicRepository(BasicRepository):
 
         return asset, bench
 
-# class YFinancePortfolioRepository(PortfolioRepository):
 
-#     @lru_cache(maxsize=256)
-#     def fetch_data(
-#         self,
-#         tickers: tuple[str, ...],
-#         start_date: date | None,
-#         end_date: date | None,
-#     ) -> pd.DataFrame:
+class YFinancePortfolioRepository(PortfolioRepository):
 
-#         for ticker in tickers:
-#             if not validate_ticker(ticker):
-#                 msg, name = Error400.error(id, "INV_TICKER")
-#                 FastLog.write_error(name=name, message=msg)
-#                 raise ValueError(f"{msg} {ticker}")
+    @lru_cache(maxsize=256)
+    def fetch_data(
+        self,
+        tickers: tuple[str, ...],
+        start_date: date | None,
+        end_date: date | None,
+    ) -> pd.DataFrame:
 
-#         params = {
-#                 "start": start_date,
-#                 "end": (end_date or date.today()),
-#             }
+        for ticker in tickers:
+            if not validate_ticker(ticker):
+                raise ApplicationError("INV_TICKER")
+
+        params = {
+                "start": start_date,
+                "end": (end_date or date.today()),
+            }
 
 
-#         return yf.download(
-#             tickers=list(tickers),
-#             progress=False,
-#             auto_adjust=True,
-#             **params,
-#         )
+        return yf.download(
+            tickers=list(tickers),
+            progress=False,
+            auto_adjust=True,
+            **params,
+        )
     
 class YFinanceRiskRepository(RiskRepository):
 

@@ -1,4 +1,5 @@
 # app\domains\finance\api\metrics_route.py
+
 from fastapi import APIRouter, Request, Depends
 from app.application.config import settings
 from app.domains.finance.schemas.metrics_schema import BasicMetricsRequest, BasicMetricsResponse

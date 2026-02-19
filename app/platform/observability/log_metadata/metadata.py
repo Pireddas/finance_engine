@@ -37,6 +37,14 @@ class LogAssembler:
                     f"start_date: {params.start_date} | "
                     f"end_date: {params.end_date} | "
                 )
+            elif service_name=="portfolio-metrics":
+                result = (
+                    f"ID: {request_id} | "
+                    f"Service: {service_name} | "
+                    f"tickers: {params.tickers} | "
+                    f"start_date: {params.start_date} | "
+                    f"end_date: {params.end_date} | "
+                )
         except AttributeError as e:
             raise ValueError(f"Erro: {service_name} - {e}")
         

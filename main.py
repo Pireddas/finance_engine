@@ -12,7 +12,7 @@ from app.application.config import settings
 from app.application.bootstrap import init_api_key_db
 
 from app.domains.finance.api import metrics_route
-# from app.domains.portfolio.api import portfolio_route
+from app.domains.portfolio.api import portfolio_route
 from app.domains.risk.api import risk_route
 
 from app.domains.auth.api import api_key_route
@@ -56,7 +56,7 @@ app.add_middleware(SQLiteAuthMiddleware)
 # -----------------------
 app.include_router(metrics_route.router)
 app.include_router(risk_route.router)
-# app.include_router(portfolio_route.router)
+app.include_router(portfolio_route.router)
 app.include_router(api_key_route.router)
 
 # -----------------------
@@ -75,3 +75,4 @@ if __name__ == "__main__":
         reload=True,
     )
 
+# vibe_2446c4e9af2081a9022bdcae4003e37f

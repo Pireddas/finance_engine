@@ -7,8 +7,8 @@ from typing import List
 load_dotenv(override=False)
 
 class Settings:
-    PROJECT_NAME = "Financial Metrics API"
-    VERSION = "0.1.0"
+    PROJECT_NAME = os.getenv("PROJECT_NAME", "Financial Metrics API (Engine)")
+    VERSION = os.getenv("VERSION", "0.1.0")
 
     LANGUAGE = os.getenv("LANGUAGE", "EN")
 

@@ -1,5 +1,5 @@
 # app\domains\finance\services\basic_metrics_service.py
-
+ 
 import json
 from app.application.config import settings
 from app.platform.analytics.engine.basic_metrics import BasicMetricsEngine
