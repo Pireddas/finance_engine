@@ -107,11 +107,6 @@ Recebe dados do backend e retorna resultados estruturados
 
 - Cada repositório define src/ como raiz do código Python
 - Imports devem ser absolutos a partir de src/
-- Tudo acima de src/:
-  - Documentação
-  - Tests
-  - Scripts e CI/CD
-  - Configurações de Poetry (pyproject.toml)
 
 ---
 
