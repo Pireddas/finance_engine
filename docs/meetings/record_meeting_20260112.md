@@ -5,7 +5,7 @@
 **Versão:** `1.0`  
 **Elaboração:** `PMO / Especialista de Requisitos / Arquiteto de Software`  
 **Validação:** `Product Owner / Gerência / Alta Gestão`  
- 
+  
 ---
 
 ## 1. Objetivo da Reunião
