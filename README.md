@@ -195,6 +195,13 @@ O projeto foi desenhado para ser extensível, com um roadmap claro para ambiente
 6.  **Documentação:**
     Acesse `/docs` para visualizar o Swagger UI ou `/redoc` para documentação técnica.
 
+
+## Observação final
+Este projeto representa um recorte técnico de uma arquitetura mais ampla que, em ambiente corporativo real, envolveria múltiplas áreas, fluxos formais de aprovação e um volume significativo de documentação institucional.
+
+Os documentos disponíveis na pasta `/docs` são exemplos que ilustram como esse processo ocorreria em um contexto corporativo completo. Eles não representam a totalidade de artefatos formais que existiriam em um ambiente real, mas demonstram o modelo de governança e tomada de decisão que fundamenta e orienta todo o ciclo de definição, validação e entrega de soluções.
+
+
 ---
 📌 *Designed for governance. Built for evolution.*
 
