@@ -31,6 +31,99 @@ O projeto utiliza uma divisão por **Domínios**, isolando a lógica de negócio
 
 ---
 
+## 🧾 Engine Versioning & Methodology Governance (Design Principle)
+
+Embora este projeto esteja focado no desenvolvimento dos motores quantitativos, sua arquitetura já foi concebida considerando a futura implementação de um **Framework de Governança de Regras, Parâmetros e Metodologias**.
+
+Cada resposta da API não retorna apenas resultados numéricos.  
+Ela inclui explicitamente um bloco `engine_specification`, contendo:
+
+- Identificação da metodologia aplicada  
+- Versão da engine  
+- Data de vigência (`effective_date`)  
+- Premissas estatísticas e parâmetros estruturais  
+- Manifesto técnico completo da fórmula utilizada  
+
+Exemplo simplificado de retorno:
+
+```json
+{
+  "engine_specification": {
+    "engine_risk_metrics": {
+      "effective_date": "2024-08-15",
+      "manifest": {
+        "engine": "tail_risk",
+        "engine_version": "1.2.0",
+        "formula_version": "historical_var_cvar",
+        "dataframe_version": "close_prices_adjusted",
+        "assumptions": "iid_returns",
+        "created_at": "2024-08-11",
+        "effective_date": "2024-08-15"
+      }
+    }
+  }
+}
+```
+Em sistemas convencionais, regras de cálculo permanecem ocultas no código-fonte.  
+Nesta arquitetura, metodologias são tratadas como **ativos institucionais explícitos**, com versionamento e rastreabilidade formal.
+
+Atualmente, os manifests são definidos por funções estáticas, representando uma simulação controlada de governança. Essa decisão é intencional: o projeto já está preparado para que, futuramente, essas definições sejam:
+
+- Armazenadas em banco de dados  
+- Submetidas a workflow de aprovação  
+- Vinculadas a alçadas institucionais  
+- Controladas por máquina de estados (*Draft → Challenger → Champion → Deprecated*)  
+
+---
+
+### 🧠 Princípio Arquitetural
+
+O motor devolve resultados brutos e auditáveis.  
+A política metodológica é desacoplada da execução matemática.
+
+Esse design permite que o sistema evolua para um ambiente regulatório completo — incluindo estratégias *Champion-Challenger*, auditoria histórica e reconstituição de cálculos — sem necessidade de refatorações estruturais profundas.
+
+---
+
+### 📌 Benefícios Estruturais
+
+- Versionamento explícito de metodologia  
+- Rastreabilidade por `request_id`  
+- Preservação de contratos externos  
+- Preparação para compliance regulatório  
+- Evolução controlada de modelos quantitativos  
+
+O projeto, portanto, não é apenas uma API de métricas financeiras, mas a fundação de um motor analítico institucional preparado para governança formal.
+
+---
+
+### 🔗 Integração com Framework de Governança (Projeto 5)
+
+A estrutura de `engine_specification` foi desenhada para integração direta com o projeto:
+
+**5 – Framework de Governança de Regras, Parâmetros e Metodologias**
+
+Neste framework, regras e parâmetros deixam de ser definidos estaticamente e passam a ser tratados como ativos versionados em banco de dados, submetidos a fluxo formal de validação e aprovação institucional.
+
+O modelo prevê:
+
+- Gestão de ciclo de vida (Draft → Challenger → Champion → Deprecated)
+- Estratégias Champion-Challenger e A/B Testing metodológico
+- Registro de alçadas de aprovação
+- Auditoria histórica completa de transições de versão
+- Reconstituição exata de cálculos passados
+
+O motor atual já respeita essa futura arquitetura ao:
+
+- Separar cálculo de política metodológica
+- Expor metadados estruturados por engine
+- Manter rastreabilidade via `request_id`
+- Preservar estabilidade contratual da API
+
+Quando o Framework de Governança for implementado, os manifests deixarão de ser estáticos e passarão a ser resolvidos dinamicamente a partir do repositório institucional de metodologias homologadas.
+
+---
+
 ## 🧩 Domínios do Sistema
 
 ### 🔐 Auth & Governance
