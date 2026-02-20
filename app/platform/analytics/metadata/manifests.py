@@ -4,7 +4,6 @@ from app.application.config import settings
 
 def basic_metrics_manifest():
     return {
-        "engine": "basic_metrics",
         "engine_version": "1.1.0",
         "formula_version": "basic_metrics",
         "dataframe_version": "close_prices_adjusted",

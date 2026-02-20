@@ -1,5 +1,5 @@
 # app/application/assemblers/metrics_assembler.py
-
+from app.platform.analytics.metadata.manifests import basic_metrics_manifest
 class MetricsResponseAssembler:
 
     @staticmethod
@@ -14,8 +14,8 @@ class MetricsResponseAssembler:
         result["engine_specification"] = {
             "engine_metrics": {
                 "engine": engine_manifest["formula_version"],
-                "engine_version": engine_manifest["engine_version"],
-                "effective_date": engine_manifest["effective_date"]
+                "effective_date": engine_manifest["effective_date"],
+                "manifest": basic_metrics_manifest()
             }
         }
         result["ai_analysis"] = ai_analysis

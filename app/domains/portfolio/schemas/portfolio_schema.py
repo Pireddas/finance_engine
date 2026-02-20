@@ -34,26 +34,26 @@ class PortfolioResults(BaseModel):
     portfolio: PortfolioDetails
     correlation_matrix: Dict[str, Dict[str, float]]
     individual_metrics: IndividualMetrics
-
+    
 class Specmetrics(BaseModel):
     engine: str = Field(..., description="Versão do motor de cálculo")
-    engine_version: str = Field(..., description="Versão do motor de cálculo de métricas básicas")
     effective_date: Optional[str] = Field(None, json_schema_extra={"example": "2023-12-31"}, description="Data de início da vigência (AAAA-MM-DD)")
+    manifest: Dict
  
 class Specreturn(BaseModel):
     engine: str = Field(..., description="Versão do motor de cálculo")
-    engine_version: str = Field(..., description="Versão do motor de cálculo de retorno")
     effective_date: Optional[str] = Field(None, json_schema_extra={"example": "2023-12-31"}, description="Data de início da vigência (AAAA-MM-DD)")
+    manifest: Dict
 
 class Specindividual(BaseModel):
     engine: str = Field(..., description="Versão do motor de cálculo")
-    engine_version: str = Field(..., description="Versão do motor de cálculo de métricas básicas individuais")
     effective_date: Optional[str] = Field(None, json_schema_extra={"example": "2023-12-31"}, description="Data de início da vigência (AAAA-MM-DD)")
- 
+    manifest: Dict
+    
 class Speccorrelation(BaseModel):
     engine: str = Field(..., description="Versão do motor de cálculo")
-    engine_version: str = Field(..., description="Versão do motor de cálculo de correlação")
     effective_date: Optional[str] = Field(None, json_schema_extra={"example": "2023-12-31"}, description="Data de início da vigência (AAAA-MM-DD)")
+    manifest: Dict
 
 class EngineSpec(BaseModel):
     engine_metrics: Specmetrics

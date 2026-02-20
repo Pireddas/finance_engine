@@ -1,10 +1,12 @@
 # app\domains\risk\services\risk_metrics_service.py
  
 import json
+from typing import Any
 from app.application.config import settings
 from app.platform.analytics.engine.risk_metrics import TailRiskEngine
 from app.application.gpt.analyze_text import AnalyzeTextUseCase
 from app.domains.risk.contract.prompt_contract import FinanceiroPromptContract
+from app.application.assemblers.risk_assembler import RiskMetricsResponseAssembler
 
 class RiskMetricsService:
     def __init__(
@@ -32,11 +34,13 @@ class RiskMetricsService:
     
     def get_risk_metrics(
         self, 
+        params: Any,
         ticker: str, 
         short: bool,
         start_date: str = None, 
         end_date: str = None,
         ai_analysis: bool = False,
+        request_id: str = None,
     ):
 
         returns = self.market_data_repo.fetch_data(
@@ -64,5 +68,15 @@ class RiskMetricsService:
         ai_analysis = None if not ai_analysis else use_case.execute(FinanceiroPromptContract(), payload_string)
         # --- format to genai prompt ---
         
-        return results, ai_analysis
+        manifest = self.engine.metadata()
+
+        assembler = RiskMetricsResponseAssembler.build(
+            request_id=request_id,
+            params=params,
+            engine_manifest=manifest,
+            results=results,
+            ai_analysis=ai_analysis
+        )
+
+        return assembler
 

@@ -1,7 +1,7 @@
 # app\domains\risk\schemas\risk_schema.py
 
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, Dict
 
 # --- INPUT (Request) ---
 class RiskMetricsRequest(BaseModel):
@@ -31,10 +31,9 @@ class RiskResults(BaseModel):
     z_score_worst: float = Field(..., description="Z-Score do pior dia (quão anômala foi a queda)")
 
 class RiskMetricsEngine(BaseModel):
-    engine: str = Field(..., description="Versão do motor de cálculo")
-    engine_version: str = Field(..., description="Versão do motor de cálculo de métricas de risco")
     effective_date: Optional[str] = Field(None, json_schema_extra={"example": "2023-12-31"}, description="Data de início da vigência (AAAA-MM-DD)")
- 
+    manifest: Dict
+    
 class EngineSpec(BaseModel):
     engine_risk_metrics: RiskMetricsEngine
 

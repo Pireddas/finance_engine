@@ -5,6 +5,7 @@ from app.application.config import settings
 from app.platform.analytics.engine.basic_metrics import BasicMetricsEngine
 from app.application.gpt.analyze_text import AnalyzeTextUseCase
 from app.domains.finance.contract.prompt_contract import FinanceiroPromptContract
+from app.application.assemblers.metrics_assembler import MetricsResponseAssembler
 
 class BasicMetricsService:
     def __init__(
@@ -37,6 +38,7 @@ class BasicMetricsService:
         start_date: str = None,
         end_date: str = None,
         ai_analysis: bool = False,
+        request_id: str = None,
     ):
 
         target_bench = benchmark or settings.DEFAULT_BENCHMARK
@@ -52,6 +54,7 @@ class BasicMetricsService:
         # --- CÁLCULOS FINANCEIROS ---    
         self.engine = BasicMetricsEngine()
         results = self.engine.calculate(asset, bench, self.rf_rate)
+
         use_case = AnalyzeTextUseCase()
         payload = {
             "symbol": ticker,
@@ -71,12 +74,21 @@ class BasicMetricsService:
         ai_analysis = None if not ai_analysis else use_case.execute(FinanceiroPromptContract(), payload_string)
         # --- format to genai prompt ---
 
-        return {
+        manifest = self.engine.metadata()
+        res = {
             "symbol": ticker,
             "benchmark_ref": target_bench,
             "settings_used": {"period": self.period, "risk_free_rate": self.rf_rate},
             "parameters": {"start_date": start_date, "end_date": end_date},
             "results": results
-        }, ai_analysis
-        ###############################################################################
+        }
+        assembler = MetricsResponseAssembler.build(
+                request_id=request_id,
+                engine_manifest=manifest,
+                result=res,
+                ai_analysis=ai_analysis
+            )
+
+        return assembler
+
 

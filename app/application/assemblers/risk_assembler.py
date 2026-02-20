@@ -1,4 +1,5 @@
 # app\application\assemblers\risk_assembler.py
+from app.platform.analytics.metadata.manifests import tail_risk_manifest
 
 class RiskMetricsResponseAssembler:
  
@@ -14,9 +15,8 @@ class RiskMetricsResponseAssembler:
             "request_id": request_id,
             "engine_specification": {
                 "engine_risk_metrics": {
-                    "engine": engine_manifest["formula_version"],
-                    "engine_version": engine_manifest["engine_version"],
                     "effective_date": engine_manifest["effective_date"],
+                    "manifest": tail_risk_manifest()
                 }
             },
             "symbol": params.ticker,

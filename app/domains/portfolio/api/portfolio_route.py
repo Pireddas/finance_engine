@@ -35,39 +35,42 @@ async def get_portfolio_metrics(
     correlation_engine: CorrelationEngine = Depends(get_correlation_engine),
     portfolio_engine: PortfolioMetricsEngine = Depends(get_portfolio_engine),
     individual_engine: IndividualMetricsEngine = Depends(get_individual_engine),
-    assembler: PortfolioMetricsResponseAssembler = Depends()
 ):
     
     request.state.payload = params.model_dump()
-    Log(service_name="portfolio-metrics", params=params, request_id=request.state.request_id).info()
+
+    request_id=getattr(request.state, "request_id", "unknown")
+
+    Log(service_name="portfolio-metrics", params=params, request_id=request_id).info()
 
     if (params.ai_analysis) and (not settings.OPENAI_API_KEY):
         raise ApplicationError("NO_API_KEYS") 
     
-    res, ai_analysis = service.get_portfolio_metrics(**params.model_dump())
-
-
     return_manifest = return_engine.metadata()
-    Log(service_name="portfolio-metrics", params=return_manifest, request_id=request.state.request_id).debug()
+    Log(service_name="portfolio-metrics", params=return_manifest, request_id=request_id).debug()
     
     correlation_engine = correlation_engine.metadata()
-    Log(service_name="portfolio-metrics", params=correlation_engine, request_id=request.state.request_id).debug()
+    Log(service_name="portfolio-metrics", params=correlation_engine, request_id=request_id).debug()
     
     portfolio_engine = portfolio_engine.metadata()
-    Log(service_name="portfolio-metrics", params=portfolio_engine, request_id=request.state.request_id).debug()
+    Log(service_name="portfolio-metrics", params=portfolio_engine, request_id=request_id).debug()
     
     individual_engine = individual_engine.metadata()
-    Log(service_name="portfolio-metrics", params=individual_engine, request_id=request.state.request_id).debug()
+    Log(service_name="portfolio-metrics", params=individual_engine, request_id=request_id).debug()
+    
+    manifest = {
+        "return_engine": return_manifest,
+        "correlation_engine": correlation_engine,
+        "portfolio_engine": portfolio_engine,
+        "individual_engine": individual_engine,
+    }
 
-
-    return assembler.build(
-        request_id=getattr(request.state, "request_id", "unknown"),
+    result = service.get_portfolio_metrics(
         params=params,
-        engine_manifest=portfolio_engine,
-        engine_Correlation=correlation_engine,
-        engine_IndividualMetrics=individual_engine,
-        engine_Return=return_manifest,
-        result=res,
-        ai_analysis=ai_analysis
+        **params.model_dump(),
+        manifest=manifest,
+        request_id=request_id
     )
+
+    return result
 

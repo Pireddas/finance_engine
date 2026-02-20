@@ -1,7 +1,7 @@
 # app\domains\finance\schemas\metrics_schema.py
 
 from pydantic import BaseModel, Field, field_validator
-from typing import Optional
+from typing import Optional, Dict
 from datetime import datetime
 
 # --- INPUT SCHEMA ---
@@ -52,9 +52,9 @@ class BasicMetricsResults(BaseModel):
 
 class Specmetrics(BaseModel):
     engine: str = Field(..., description="Versão do motor de cálculo")
-    engine_version: str = Field(..., description="Versão do motor de cálculo de métricas básicas")
+    #engine_version: str = Field(..., description="Versão do motor de cálculo de métricas básicas")
     effective_date: Optional[str] = Field(None, json_schema_extra={"example": "2023-12-31"}, description="Data de início da vigência (AAAA-MM-DD)")
- 
+    manifest: Dict
 
 class EngineSpec(BaseModel):
     engine_metrics: Specmetrics
