@@ -26,9 +26,10 @@ class Settings:
     API_LOG_ERROR = os.getenv("API_LOG_ERROR", "api_access_error.log")
     API_LOG_CRITICAL = os.getenv("API_LOG_CRITICAL", "api_access_critical.log")
 
-    ASSET_CACHE_DIR = os.getenv("ASSET_CACHE_DIR", "app/infrastructure/cache")
+    ASSET_CACHE_DIR = os.getenv("ASSET_CACHE_DIR", "app/infrastructure/oltp")
     EXT_CACHE = os.getenv("EXT_CACHE", "parquet")
     COMPRESSION = os.getenv("COMPRESSION", "BROTLI")
+    CACHE= os.getenv("CACHE", "True").lower() == "true"
 
     API_LOG = os.getenv(
         "API_LOG",

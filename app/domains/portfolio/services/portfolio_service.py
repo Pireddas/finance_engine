@@ -1,6 +1,7 @@
 # app\domains\portfolio\services\portfolio_service.py
 
-import json
+import json, os
+import pandas as pd
 from typing import Any
 from app.application.config import settings
 from app.platform.analytics.engine.correlation_engine import CorrelationEngine
@@ -40,9 +41,6 @@ class PortfolioService:
     def get_portfolio_metrics(
         self, 
         params: Any,
-        tickers: list, 
-        start_date: str = None, 
-        end_date: str = None,
         ai_analysis: bool = False,
         manifest: dict = None,
         request_id: str = None,
@@ -62,8 +60,11 @@ class PortfolioService:
         if df.empty:
             return {"error": "Dados insuficientes para o intervalo selecionado."}
 
-
         close_prices = df["Close"]
+        if settings.CACHE:
+            if not os.path.exists(settings.ASSET_CACHE_DIR):
+                os.makedirs(settings.ASSET_CACHE_DIR)
+            close_prices.to_parquet(f"{settings.ASSET_CACHE_DIR}/{request_id}.{settings.EXT_CACHE}", compression=settings.COMPRESSION)
 
         returns_data = ReturnEngine().calculate(close_prices)
         returns = returns_data["returns"]

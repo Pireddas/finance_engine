@@ -1,6 +1,7 @@
 # app\domains\finance\services\basic_metrics_service.py
  
-import json
+import json, os
+import pandas as pd
 from app.application.config import settings
 from app.platform.analytics.engine.basic_metrics import BasicMetricsEngine
 from app.application.gpt.analyze_text import AnalyzeTextUseCase
@@ -50,6 +51,14 @@ class BasicMetricsService:
             end_date=end_date,
             period=self.period,
         )      
+        df = pd.DataFrame()
+
+        df[ticker]=asset
+        df[benchmark]=bench
+        if settings.CACHE:
+            if not os.path.exists(settings.ASSET_CACHE_DIR):
+                os.makedirs(settings.ASSET_CACHE_DIR)
+            df.to_parquet(f"{settings.ASSET_CACHE_DIR}/{request_id}.{settings.EXT_CACHE}", compression=settings.COMPRESSION)
 
         # --- CÁLCULOS FINANCEIROS ---    
         self.engine = BasicMetricsEngine()

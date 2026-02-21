@@ -1,6 +1,6 @@
 # app\domains\risk\services\risk_metrics_service.py
  
-import json
+import json, os
 from typing import Any
 from app.application.config import settings
 from app.platform.analytics.engine.risk_metrics import TailRiskEngine
@@ -55,6 +55,12 @@ class RiskMetricsService:
         if returns.empty:
             return {"error": "Dados insuficientes para o intervalo selecionado."}
         
+        if settings.CACHE:
+            if not os.path.exists(settings.ASSET_CACHE_DIR):
+                os.makedirs(settings.ASSET_CACHE_DIR)
+            returns["Close"].to_parquet(f"{settings.ASSET_CACHE_DIR}/{request_id}.{settings.EXT_CACHE}", compression=settings.COMPRESSION)
+
+
         # --- CÁLCULOS ESTATÍSTICOS (RISCO DE CAUDA) ---
 
         self.engine = TailRiskEngine()

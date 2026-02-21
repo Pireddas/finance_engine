@@ -8,7 +8,7 @@ from app.platform.analytics.engine.correlation_engine import CorrelationEngine
 from app.platform.analytics.engine.individual_metrics_engine import IndividualMetricsEngine
 from app.platform.analytics.engine.portfolio_metrics_engine import PortfolioMetricsEngine
 from app.platform.analytics.engine.return_engine import ReturnEngine
-from app.application.assemblers.portfolio_assembler import PortfolioMetricsResponseAssembler
+
 
 from app.application.guards.service_guard import service_guard
 from app.platform.observability.log_assembler import Log
@@ -67,10 +67,8 @@ async def get_portfolio_metrics(
 
     result = service.get_portfolio_metrics(
         params=params,
-        **params.model_dump(),
         manifest=manifest,
         request_id=request_id
     )
 
     return result
-
