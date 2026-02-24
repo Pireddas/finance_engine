@@ -41,13 +41,12 @@ class PortfolioService:
     def get_portfolio_metrics(
         self, 
         params: Any,
-        ai_analysis: bool = False,
         manifest: dict = None,
         request_id: str = None,
     ):
         request_id = request_id
         tickers_tuple = tuple(sorted(params.tickers)) 
-
+        ai_analysis = params.ai_analysis
         df = self.market_data_repo.fetch_data(
             tickers=tickers_tuple,
             start_date=params.start_date,
@@ -91,6 +90,7 @@ class PortfolioService:
             jsonable_encoder(payload),
             ensure_ascii=False
         )
+
         ai_analysis = None if not ai_analysis else use_case.execute(FinanceiroPromptContract(), payload_string)
         # --- format to genai prompt ---
 

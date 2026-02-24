@@ -8,7 +8,7 @@ class FinanceiroPromptContract:
 
     SYSTEM_PROMPT: str = """
 Você é um analista sênior.
-Parecer técnico (máx. 5 linhas).
+Parecer técnico (máx. 10 linhas).
 Sem recomendação de compra/venda.
 Basear-se apenas nos dados abaixo.
 

@@ -9,6 +9,6 @@ class CorrelationEngine:
         return self.manifest
 
     def calculate(self, returns: pd.DataFrame):
-        corr_matrix = returns.corr(method=self.manifest['method'])
+        corr_matrix = returns.corr(method=self.manifest["assumptions"]['method'])
 
         return corr_matrix.to_dict()

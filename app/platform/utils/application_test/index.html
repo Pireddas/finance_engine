@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>QuantEngine Pro Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+
+    </style>
+</head>
+
+<body class="h-screen flex flex-col overflow-hidden" onload="setMode('finance')">
+
+    <header class="h-16 border-b border-slate-800 bg-[#0f172a] flex items-center px-8 justify-between shrink-0">
+        <div class="flex items-center gap-8">
+            <h1 class="text-xl font-black tracking-tighter text-white">QUANT<span
+                    class="text-blue-500 italic">ENGINE</span> <span
+                    class="text-[10px] font-mono border border-blue-500/30 px-2 py-0.5 rounded text-blue-400">PRO
+                    v1.4</span></h1>
+            <nav class="flex gap-1 bg-slate-900 p-1 rounded-lg border border-slate-800">
+                <button onclick="setMode('finance')" id="btn-finance"
+                    class="px-4 py-1.5 rounded text-xs font-bold transition">FINANCE</button>
+                <button onclick="setMode('risk')" id="btn-risk"
+                    class="px-4 py-1.5 rounded text-xs font-bold transition">RISK</button>
+                <button onclick="setMode('portfolio')" id="btn-portfolio"
+                    class="px-4 py-1.5 rounded text-xs font-bold transition">PORTFOLIO</button>
+            </nav>
+        </div>
+        <div class="flex items-center gap-4 text-[10px] font-mono text-slate-500">
+            <span>STATION: 127.0.0.1:8002</span>
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <aside class="w-80 border-r border-slate-800 bg-[#0a0e14] p-6 flex flex-col gap-6 overflow-y-auto">
+            <section class="space-y-4">
+                <h3
+                    class="text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-slate-800 pb-2">
+                    Parameters</h3>
+                <div id="inputs-container" class="space-y-4"></div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-[9px] font-bold text-slate-500 uppercase">Start Date</label>
+                        <input id="start" type="date" value="2023-01-01"
+                            class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-slate-300 outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-bold text-slate-500 uppercase">End Date</label>
+                        <input id="end" type="date" value="2023-12-31"
+                            class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-xs text-slate-300 outline-none focus:border-blue-500">
+                    </div>
+                </div>
+                <div class="flex items-center justify-between bg-slate-900/50 p-3 rounded border border-slate-800">
+                    <label for="ai-check" class="text-[10px] font-bold text-slate-400 uppercase cursor-pointer">AI
+                        Analysis Engine</label>
+                    <input id="ai-check" type="checkbox"
+                        class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-blue-500 focus:ring-0">
+                </div>
+                <button onclick="executar()"
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3 rounded text-xs uppercase tracking-widest transition-all active:scale-[0.98] shadow-lg shadow-blue-900/20">Execute
+                    Query</button>
+            </section>
+
+            <section class="mt-auto pt-6 border-t border-slate-800">
+                <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3">Engine Specification</h3>
+                <div id="manifest-content" class="space-y-2 text-[10px] font-mono text-slate-400 italic">
+                    Ready to initialize...
+                </div>
+            </section>
+        </aside>
+
+        <main class="flex-1 bg-[#0d1117] p-8 overflow-y-auto">
+            <div id="empty-state" class="max-w-6xl mx-auto flex items-center justify-center h-[500px]">
+                <div class="text-center space-y-4">
+                    <div class="text-3xl font-black tracking-tight text-white">
+                        QUANT<span class="text-blue-500 italic">ENGINE</span>
+                    </div>
+                    <div class="text-sm text-slate-500 uppercase tracking-widest">
+                        Quantum Engine Ready
+                    </div>
+                    <div class="text-slate-400 text-sm">
+                        Configure parameters and execute a query to initialize analytics.
+                    </div>
+                </div>
+            </div>
+
+            <div id="dashboard" class="max-w-6xl mx-auto space-y-8 hidden">
+
+                <div id="metrics-grid" class="grid grid-cols-4 md:grid-cols-4 gap-4">
+                </div>
+
+                <div id="portfolio-table-container" class="hidden"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-8 space-y-4">
+                        <div class="metric-card rounded-xl overflow-hidden min-h-[400px]">
+                            <div
+                                class="bg-slate-800/50 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+                                <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">AI Quantum
+                                    Analysis</span>
+                                <div id="ia-badge"
+                                    class="px-2 py-0.5 rounded-full bg-slate-900 text-[8px] font-bold text-slate-500 uppercase">
+                                    Standby</div>
+                            </div>
+                            <div id="ia-content" class="p-8 text-slate-400 leading-relaxed text-sm whitespace-pre-wrap">
+                                Selecione os ativos e execute para gerar o relatório consolidado...
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-4 space-y-4">
+                        <div class="metric-card rounded-xl p-6 h-full">
+                            <h3
+                                class="text-[10px] font-bold text-slate-500 uppercase mb-4 tracking-widest border-b border-slate-800 pb-2">
+                                Quick Stats</h3>
+                            <div id="secondary-metrics" class="space-y-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <details class="bg-black/40 rounded-lg border border-slate-800">
+                    <summary
+                        class="p-3 text-[10px] font-bold text-slate-500 cursor-pointer uppercase hover:text-slate-300 transition">
+                        Raw JSON Response</summary>
+                    <pre id="raw-log" class="p-6 text-blue-400/70 font-mono text-[11px] overflow-auto max-h-96"></pre>
+                </details>
+            </div>
+        </main>
+    </div>
+
+<script src="js/script.js"></script>
+</body>
+
+</html>

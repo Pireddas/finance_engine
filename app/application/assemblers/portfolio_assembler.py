@@ -20,6 +20,7 @@ class PortfolioMetricsResponseAssembler:
         result: dict,
         ai_analysis: str
     ) -> dict:
+
         return {
             "request_id": request_id,
             "engine_specification": {

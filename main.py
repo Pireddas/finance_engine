@@ -8,6 +8,7 @@ from fastapi import FastAPI, Security
 from fastapi.security import APIKeyHeader
 from contextlib import asynccontextmanager
 
+from fastapi.middleware.cors import CORSMiddleware
 from app.application.config import settings
 from app.application.bootstrap import init_api_key_db
 
@@ -21,6 +22,7 @@ from app.platform.observability.auth_middleware import SQLiteAuthMiddleware
 from app.application.middlewares.request_id import RequestIDMiddleware
 from app.application.errors.semantic_error import ApplicationError
 from app.application.errors.handlers import semantic_error_handler
+from fastapi.staticfiles import StaticFiles
 
 api_key_header = APIKeyHeader(name="X-API-KEY", auto_error=False)
 
@@ -36,6 +38,28 @@ async def lifespan(app: FastAPI):
 # -----------------------
 # Application
 # -----------------------
+
+app = FastAPI(
+    dependencies=[Security(api_key_header)],
+    lifespan=lifespan
+    )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # em produção coloque o domínio específico
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# -----------------------
+# Middlewares
+# -----------------------
+app.add_middleware(PerformanceLoggingMiddleware)
+
+app.add_middleware(SQLiteAuthMiddleware)
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
@@ -44,12 +68,18 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# -----------------------
-# Middlewares
-# -----------------------
-app.add_middleware(PerformanceLoggingMiddleware)
 app.add_middleware(RequestIDMiddleware)
-app.add_middleware(SQLiteAuthMiddleware)
+
+app.mount(
+    "/application_test",
+    StaticFiles(directory="app/platform/utils/application_test", html=True),
+    name="application_test"
+)
+
+# -----------------------
+# Error
+# -----------------------
+app.add_exception_handler(ApplicationError, semantic_error_handler)
 
 # -----------------------
 # Routers
@@ -58,11 +88,6 @@ app.include_router(metrics_route.router)
 app.include_router(risk_route.router)
 app.include_router(portfolio_route.router)
 app.include_router(api_key_route.router)
-
-# -----------------------
-# Error
-# -----------------------
-app.add_exception_handler(ApplicationError, semantic_error_handler)
 
 # -----------------------
 # Local execution only
@@ -75,4 +100,4 @@ if __name__ == "__main__":
         reload=True,
     )
 
-# vibe_2446c4e9af2081a9022bdcae4003e37f
+# vibe_08b699e0f7b9e06db19974ea06efe444

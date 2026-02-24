@@ -1,0 +1,25 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0a0e14;
+  color: #e2e8f0;
+  scrollbar-color: rgba(167, 167, 167, 0.295) rgb(29, 29, 29);
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.metric-card {
+  background: linear-gradient(145deg, #1a1f26, #14191f);
+  border: 1px solid #2d3748;
+}
+
+.glow-green {
+  text-shadow: 0 0 10px rgba(72, 187, 120, 0.5);
+  color: #48bb78;
+}
+
+.glow-blue {
+  text-shadow: 0 0 10px rgba(66, 153, 225, 0.5);
+  color: #4299e1;
+}

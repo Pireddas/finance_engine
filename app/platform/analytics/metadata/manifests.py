@@ -34,10 +34,12 @@ def portifolio_manifest():
         "version": "1.3.0",
         "formula_version": "expected_risk_portfolio",
         "dataframe_version": "close_prices_adjusted",
-        "weights": "equal_weight",
-        "annualization_factor": settings.ANNUALIZATION_FACTOR,
-        "risk_free_rate": "annualized",
-        "risk_free_tx": settings.RISK_FREE_RATE,
+        "assumptions": {
+            "weights": "equal_weight",
+            "annualization_factor": settings.ANNUALIZATION_FACTOR,
+            "risk_free_rate": "annualized",
+            "risk_free_tx": settings.RISK_FREE_RATE
+        },
         "created_at": date(2025, 12, 18).isoformat(),
         "effective_date": date(2025, 12, 21).isoformat()
     } 
@@ -59,10 +61,12 @@ def individual_portfolio_manifest():
         "version": "1.5.0",
         "formula_version": "individual_metrics_portfolio",
         "dataframe_version": "close_prices_adjusted",
-        "weights": "equal_weight",
-        "annualization_factor": settings.ANNUALIZATION_FACTOR,
-        "risk_free_rate": "annualized",
-        "risk_free_tx": settings.RISK_FREE_RATE,
+        "assumptions": {
+            "weights": "equal_weight",
+            "annualization_factor": settings.ANNUALIZATION_FACTOR,
+            "risk_free_rate": "annualized",
+            "risk_free_tx": settings.RISK_FREE_RATE
+        },
         "created_at": date(2024, 11, 15).isoformat(),
         "effective_date": date(2024, 11, 17).isoformat()
     } 
@@ -73,7 +77,9 @@ def correlation_portfolio_manifest():
         "version": "1.6.0",
         "formula_version": "correlation_matrix_portfolio",
         "dataframe_version": "close_prices_adjusted",
-        "method": "pearson",
+        "assumptions": {
+            "method": "pearson"
+        },
         "created_at": date(2026, 1, 1).isoformat(),
         "effective_date": date(2026, 1, 3).isoformat()
     } 
