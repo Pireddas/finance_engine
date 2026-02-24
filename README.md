@@ -148,6 +148,11 @@ Análise de cestas de ativos e diversificação.
 
 ---
 
+> Você pode acessar o terminal de teste visual em `/application_test` para validar a saída destes dados em uma interface amigável.  
+> Exemplo: http://127.0.0.1:8002/application_test
+
+---
+
 ## 🛠️ Tecnologias e Boas Práticas
 * **FastAPI:** Framework moderno de alta performance com suporte a tipagem estática.
 * **Pydantic:** Validação de dados e contratos de API (Schemas).
